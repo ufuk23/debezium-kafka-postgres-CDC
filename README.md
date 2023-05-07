@@ -43,7 +43,7 @@ Use kafdrop running as a container on port 9000
 ![kafdrop0](https://user-images.githubusercontent.com/8513827/236702488-db78ecd7-0ab5-457a-bb33-89fe3ce9fd05.png)
 
 
-![kafdrop2](https://user-images.githubusercontent.com/8513827/236702426-ea1e39fd-de63-4dea-8af5-1c639e3dde4a.png)
+![kafdrop01](https://user-images.githubusercontent.com/8513827/236702559-7d091b30-c586-400b-8954-f4cbb9c9bb61.png)
 
 
 <h1>Version.2 (kafka clustered)</h1>
