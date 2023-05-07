@@ -40,8 +40,7 @@ ALTER TABLE student REPLICA IDENTITY FULL;
 Use kafdrop running as a container on port 9000
 
 
-![kafdrop](https://user-images.githubusercontent.com/8513827/236702360-03f15bcd-0920-4f4a-9a7e-acb5687beb23.png)
-
+![kafdrop2](https://user-images.githubusercontent.com/8513827/236702426-ea1e39fd-de63-4dea-8af5-1c639e3dde4a.png)
 
 
 <h1>Version.2 (kafka clustered)</h1>
@@ -66,3 +65,6 @@ POST http://10.1.37.187:8083/connectors
 ```
 <h3> Run the container to tail kafka messages </h3>
 Use kafdrop running as a container on port 9000
+
+
+![kafdrop](https://user-images.githubusercontent.com/8513827/236702360-03f15bcd-0920-4f4a-9a7e-acb5687beb23.png)
