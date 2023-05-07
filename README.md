@@ -1,6 +1,8 @@
 # debezium-kafka-postgres-CDC
 Debezium kafka example - CDC pattern
 
+![debezium](https://user-images.githubusercontent.com/8513827/236702350-b347c23d-e314-468c-8aeb-98cb233c7de3.png)
+
 
 <h1>Version.1</h1>
 
@@ -37,13 +39,8 @@ ALTER TABLE student REPLICA IDENTITY FULL;
 <h3> Run the container to tail kafka messages </h3>
 Use kafdrop running as a container on port 9000
 
-<h4>Kafka native sh files</h4>  
 
-/usr/bin# kafka-topics --list --zookeeper zookeeper:2181
-
-/usr/bin# kafka-console-consumer --bootstrap-server kafka:9092  --topic postgres.public.student --from-beginning --timeout-ms 10 | tail -n 1
-
-
+![kafdrop](https://user-images.githubusercontent.com/8513827/236702360-03f15bcd-0920-4f4a-9a7e-acb5687beb23.png)
 
 
 
