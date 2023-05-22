@@ -60,21 +60,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       #https://github.com/wurstmeister/kafka-docker/issues/553
 
-
-  #kafdrop for topic/msg visualization
-  kafdrop:
-    image: obsidiandynamics/kafdrop
-    restart: "no"
-    environment:
-      KAFKA_BROKERCONNECT: "kafka1:29092,kafka2:29093"
-      JVM_OPTS: "-Xms512M -Xmx2048M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
-    ports:
-      - 9000:9000
-    depends_on:
-      - kafka1
-      - kafka2
-
-
   # debezium connector
   kconnect:
     image: debezium/connect:1.9
@@ -94,7 +79,50 @@ services:
       - zookeeper
       - postgres
 
-# POST  http://localhost:8083/connectors --> To register the kafka connector
+  #kafdrop for topic/msg visualization
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka1:29092,kafka2:29093"
+      JVM_OPTS: "-Xms512M -Xmx2048M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    ports:
+      - 9000:9000
+    depends_on:
+      - kafka1
+      - kafka2
+ 
+  # kafka-manager UI to manage kafka-cluster
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    restart: "no"
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: "letmein"
+    ports:
+      - 9009:9000
+    depends_on:
+      - kafka1
+      - kafka2
+      - zookeeper
+
+  # kafka-ui is another tool to manage kafka-cluster
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8088:8080
+    depends_on:
+      - kafka1
+      - kafka2
+      - kconnect
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: wizard_test
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092, kafka2:29093
+
+# POST request to create and register the kafka connector
+# POST  http://localhost:8083/connectors
 # {
 #   "name": "inventory-connector",
 #   "config": {
