@@ -73,7 +73,7 @@ Use kafdrop running as a container on port 9000
 ![kafdrop](https://user-images.githubusercontent.com/8513827/236702360-03f15bcd-0920-4f4a-9a7e-acb5687beb23.png)
 
 <h3>
-Conduktor kafka UI supplies many features managing patitions, topics, replications, consumer groups, connectors, message contents etc.</h3>
+Conduktor kafka UI supplies many features managing topics, partitions, replications, consumer groups, connectors, message contents etc.</h3>
 
 ![conduktor1](https://github.com/ufuk23/debezium-kafka-postgres-CDC/assets/8513827/0190cd57-66b9-4e9d-b108-07b0f72315f5)
 
