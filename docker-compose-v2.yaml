@@ -121,6 +121,30 @@ services:
       KAFKA_CLUSTERS_0_NAME: wizard_test
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092, kafka2:29093
 
+  # conduktor providing many features, the best kafka UI I've ever seen 
+  conduktor:
+    image: conduktor/conduktor-platform:latest
+    ports:
+      - "8080:8080"
+    #volumes:
+    #  - conduktor_data:/var/conduktor
+    depends_on:
+      - kafka1
+      - kafka2
+      - kconnect
+    environment:
+      CDK_ORGANIZATION_NAME: "demo"
+      CDK_ADMIN_EMAIL: "admin@admin.io"
+      CDK_ADMIN_PASSWORD: "admin"
+      CDK_CLUSTERS_0_ID: "default"
+      CDK_CLUSTERS_0_NAME: "My Local Kafka Cluster"
+      CDK_CLUSTERS_0_COLOR: "#0013E7"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "PLAINTEXT://kafka1:29092"
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_URL: "http://kconnect:8083"
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME: "full stack kafka connect"
+
+
+
 # POST request to create and register the kafka connector
 # POST  http://localhost:8083/connectors
 # {
