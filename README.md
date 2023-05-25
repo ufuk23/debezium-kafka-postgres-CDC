@@ -8,12 +8,16 @@ Debezium kafka example - CDC pattern
 
 <h3> Postgresql config </h3>
 
+```
 psql -U docker -d exampledb -W
 
 CREATE TABLE student (id integer primary key, name varchar);
 
 select * from student;
 
+ALTER TABLE student REPLICA IDENTITY FULL;
+
+```
 <h3>Alter replica indetity as full to get all change log in the message payload</h3>
 ALTER TABLE student REPLICA IDENTITY FULL;
 
