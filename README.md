@@ -14,6 +14,7 @@ CREATE TABLE student (id integer primary key, name varchar);
 
 select * from student;
 
+<h3>Alter replice indetity as full to get all change log in the message payload</h3>
 ALTER TABLE student REPLICA IDENTITY FULL;
 
 
