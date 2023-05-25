@@ -83,6 +83,7 @@ POST http://10.1.37.187:8083/connectors
 
 
 <h3>Config Detailed</h3>
+
 ```
 {
   "name": "pg-connector",
@@ -105,7 +106,27 @@ POST http://10.1.37.187:8083/connectors
     "transforms.AddPrefix.replacement": "data.cdc.dbname"
   }
 }
+
 ```
 
+With the above settings, the connector operates as follows:
+
+Once started, it connects to the specified database and switches to the initial snapshot mode. In this mode, it sends the initial set of data obtained using a typical SELECT * FROM table_name query to Kafka.
+After the initialization is complete, the connector switches to the change data capture mode using PostgreSQL’s WAL files as a source.
+A brief description of the properties in use:
+
+* name is the name of the connector that uses the configuration above; this name is later used for interacting with the connector (i.e., viewing the status/restarting/updating the configuration) via the Kafka Connect REST API;
+* connector.class is the DBMS connector class to be used by the connector being configured;
+* plugin.name is the name of the plugin for the logical decoding of WAL data. The wal2json, decoderbuffs, and pgoutput plugins are available for selection. The first two require the installation of the appropriate DBMS extensions; pgoutput for PostgreSQL (version 10+) does not require additional actions;
+* database.* — options for connecting to the database, where database.server.name is the name of the PostgreSQL instance used to generate the topic name in the Kafka cluster;
+* table.include.list is the list of tables to track changes in; it has the schema.table_name format and cannot be used together with the table.exclude.list;
+* heartbeat.interval.ms — the interval (in milliseconds) at which the connector sends heartbeat messages to a Kafka topic;
+* heartbeat.action.query is a query that the connector executes on the source database at each heartbeat message (this option was introduced in version 1.1);
+* slot.name is the name of the PostgreSQL logical decoding slot. The server streams events to the Debezium connector using this slot;
+* publication.name is the name of the PostgreSQL publication that the connector uses. If it doesn’t exist, Debezium will attempt to create it. The connector will fail with an error if the connector user does not have the necessary privileges (thus, you better create the publication as a superuser before starting the connector for the first time).
+* transforms defines the way the name of the target topic is changed:
+* transforms.AddPrefix.type specifies that regular expressions are used;
+* transforms.AddPrefix.regex specifies the mask used to rename the target topic;
+* transforms.AddPrefix.replacement contains the replacing string.
 
 
