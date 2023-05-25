@@ -80,3 +80,32 @@ POST http://10.1.37.187:8083/connectors
 <h3>It allows to produce random message data as well</h3>
 
 ![conduktor2](https://github.com/ufuk23/debezium-kafka-postgres-CDC/assets/8513827/9931970e-ce31-4d94-a526-8045434f631a)
+
+
+<h3>Config Detailed</h3>
+```
+{
+  "name": "pg-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "database.hostname": "127.0.0.1",
+    "database.port": "5432",
+    "database.user": "debezium",
+    "database.password": "definitelynotpassword",
+    "database.dbname" : "dbname",
+    "database.server.name": "pg-dev",
+    "table.include.list": "public.(.*)",
+    "heartbeat.interval.ms": "5000",
+    "slot.name": "dbname_debezium",
+    "publication.name": "dbname_publication",
+    "transforms": "AddPrefix",
+    "transforms.AddPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.AddPrefix.regex": "pg-dev.public.(.*)",
+    "transforms.AddPrefix.replacement": "data.cdc.dbname"
+  }
+}
+```
+
+
+
